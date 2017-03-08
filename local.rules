@@ -7,6 +7,7 @@ alert tcp any any -> $HOME_NET any (msg:”Nmap XMAS Tree Scan”;GID:1;sid:1000
 alert tcp !192.168.0.0/24 any -> $HOME_NET 80 (msg:”Suspicious IP address 2”;GID:1;sid:10000006;rev:001;classtype:web-application-attack;)
 alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:"Metasploit Meterpreter-ExternalNetwork";GID:1;sid:10000007;rev:001;classtype:trojan-activity;flow:to_server,established;content:"RECV";http_client_body;depth:4;fast_pattern;isdataat:!0,relative;urilen:23<>24,norm;content:"POST";pcre:"/^\/[a-z0-9]{4,5}_[a-z0-9]{16}\/$/Ui";reference:url,blog.didierstevens.com/2015/05/11/detecting-network-traffic-from-metasploits-meterpreter-reverse-http-module/;)
 alert tcp any any -> $HOME_NET $HTTP_PORTS (msg:"Metasploit Meterpreter-InternalNetwork";GID:1;sid:10000008;rev:001;classtype:trojan-activity;flow:to_server,established;content:"RECV";http_client_body;depth:4;fast_pattern;isdataat:!0,relative;urilen:23<>24,norm;content:"POST";pcre:"/^\/[a-z0-9]{4,5}_[a-z0-9]{16}\/$/Ui";reference:url,blog.didierstevens.com/2015/05/11/detecting-network-traffic-from-metasploits-meterpreter-reverse-http-module/;)
+alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS";GID:1;sid:10000009;rev:001;classtype:attempted-dos;flow:stateless;threshold:type both,track by_dst,count 70,seconds 10;)
 
 #Por cada Regla incluira una estructura para sid-msg.map (Solo para el uso de barnyard2)
 1 || 10000002 || 001 || web-application-attack || 0 || Possible Nmap ping sweep
@@ -16,10 +17,11 @@ alert tcp any any -> $HOME_NET $HTTP_PORTS (msg:"Metasploit Meterpreter-Internal
 1 || 10000006 || 001 || web-application-attack || 0 || Suspicious IP address 2
 1 || 10000007 || 001 || trojan-activity || 0 || Metasploit Meterpreter-ExternalNetwork
 1 || 10000008 || 001 || trojan-activity || 0 || Metasploit Meterpreter-InternalNetwork
+1 || 10000009 || 001 || attempted-dos || 0 || Possible TCP DoS
 
 
 #En prueba
-#SYN Flood Attack
+#SYN Flood Attack y DOS
 #1 ejecutar: hping3 -S -p 80 --flood --rand-source 192.168.x.x
 #2 ejecutar: tshark
 alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS"; flow: stateless; threshold: type both, track by_dst, count 70, seconds 10; sid:10000001;rev:1;)
