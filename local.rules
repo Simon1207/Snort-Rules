@@ -20,4 +20,6 @@ alert tcp any any -> $HOME_NET $HTTP_PORTS (msg:"Metasploit Meterpreter-Internal
 
 #En prueba
 #SYN Flood Attack
-alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS"; flow: stateless; threshold: type both, track by_src, count 70, seconds 10; sid:10001;rev:1;)
+#1 ejecutar: hping3 -S -p 80 --flood --rand-source 192.168.x.x
+#2 ejecutar: tshark
+alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS"; flow: stateless; threshold: type both, track by_dst, count 70, seconds 10; sid:10000001;rev:1;)
