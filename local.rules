@@ -15,7 +15,7 @@ alert tcp any any -> $HOME_NET 21 (msg:"Incoming FTP connection"; flags:S; sid:1
 #Conexion con SSH fuerza bruta
 alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:"SCAN SSH BRUTE FORCE login attempt"; GID:1; sid:10000011; rev:001; flow:to_server,established; content:"SSH-"; depth:4; detection_filter:track by_src, count 5, seconds 60; metadata:service ssh; classtype:misc-activity;)
 #Sesion con SHH
-alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "Incoming SSH Connection"; GID:1; sid:10000011; rev:001;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "Incoming SSH Connection"; GID:1; sid:10000012; rev:001;)
 
 
 
@@ -28,6 +28,10 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "Incoming SSH Connection"; GID
 1 || 10000007 || 001 || trojan-activity || 0 || Metasploit Meterpreter-ExternalNetwork
 1 || 10000008 || 001 || trojan-activity || 0 || Metasploit Meterpreter-InternalNetwork
 1 || 10000009 || 001 || attempted-dos || 0 || Possible TCP DoS
+
+1 || 10000010 || 001 || attempted-admin || 0 || Incoming FTP connection
+1 || 10000011 || 001 || web-application-attack || 0 || SCAN SSH BRUTE FORCE
+1 || 10000012 || 001 || attempted-admin || 0 || Incoming SSH Connection
 
 
 #En prueba
