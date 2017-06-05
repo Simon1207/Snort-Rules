@@ -9,6 +9,16 @@ alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:"Metasploit Meterprete
 alert tcp any any -> $HOME_NET $HTTP_PORTS (msg:"Metasploit Meterpreter-InternalNetwork";GID:1;sid:10000008;rev:001;classtype:trojan-activity;flow:to_server,established;content:"RECV";http_client_body;depth:4;fast_pattern;isdataat:!0,relative;urilen:23<>24,norm;content:"POST";pcre:"/^\/[a-z0-9]{4,5}_[a-z0-9]{16}\/$/Ui";reference:url,blog.didierstevens.com/2015/05/11/detecting-network-traffic-from-metasploits-meterpreter-reverse-http-module/;)
 alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS";GID:1;sid:10000009;rev:001;classtype:attempted-dos;flow:stateless;threshold:type both,track by_dst,count 70,seconds 10;)
 
+#--Reglas experimentales--
+#Conexion entrante FTP
+alert tcp any any -> $HOME_NET 21 (msg:"Incoming FTP connection"; flags:S; sid:10000010;)
+#Conexion con SSH fuerza bruta
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:"INDICATOR-SCAN SSH brute force login attempt"; GID:1; sid:10000011; rev:001; flow:to_server,established; content:"SSH-"; depth:4; detection_filter:track by_src, count 5, seconds 60; metadata:service ssh; classtype:misc-activity;)
+#Sesion con SHH
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "SSH Detected"; GID:1; sid:10000011; rev:001;)
+
+
+
 #Por cada Regla incluira una estructura para sid-msg.map (Solo para el uso de barnyard2)
 1 || 10000002 || 001 || web-application-attack || 0 || Possible Nmap ping sweep
 1 || 10000003 || 001 || web-application-attack || 0 || TCP Port Scanning
