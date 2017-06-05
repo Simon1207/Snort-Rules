@@ -13,9 +13,9 @@ alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS";GID:1;
 #Conexion entrante FTP
 alert tcp any any -> $HOME_NET 21 (msg:"Incoming FTP connection"; flags:S; sid:10000010;)
 #Conexion con SSH fuerza bruta
-alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:"INDICATOR-SCAN SSH brute force login attempt"; GID:1; sid:10000011; rev:001; flow:to_server,established; content:"SSH-"; depth:4; detection_filter:track by_src, count 5, seconds 60; metadata:service ssh; classtype:misc-activity;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:"SCAN SSH BRUTE FORCE login attempt"; GID:1; sid:10000011; rev:001; flow:to_server,established; content:"SSH-"; depth:4; detection_filter:track by_src, count 5, seconds 60; metadata:service ssh; classtype:misc-activity;)
 #Sesion con SHH
-alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "SSH Detected"; GID:1; sid:10000011; rev:001;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "Incoming SSH Connection"; GID:1; sid:10000011; rev:001;)
 
 
 
