@@ -59,3 +59,7 @@ snort -Q -c /etc/snort/snort.conf -i eth0:eth1 -A console
 
 #Alerta de bloqueo 
 reject tcp any any <> any $HTTP_PORTS (msg:"Dropped Malicious Traffic"; content: facebook.com"; nocase; SID:991999;)
+#Bloqueo de conexion SSH
+reject tcp any any -> any 22 (msg:"I block everything to port 22"; sid:100001)
+#Bloqueo de conexion FTP
+reject tcp any any -> any 21 (msg:"I block everything to port 21"; sid:100002)
