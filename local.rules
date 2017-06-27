@@ -51,8 +51,8 @@ alert icmp any any -> $HOME_NET any (msg: "Posible Ping of death"; GID:1; sid:10
 #Para configurar Snort en modo inline (bloqueo de paquetes)
 #agregar lo siguiente a snort.conf
 config daq:afpacket
-config daq_node:inline
-config policity_mode:inline
+config daq_mode:inline
+config policy_mode:inline
 
 #comando para activar modo
 snort -Q -c /etc/snort/snort.conf -i eth0:eth1 -A console
