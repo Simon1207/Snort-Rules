@@ -46,3 +46,10 @@ alert icmp any any -> $HOME_NET any (msg: "Posible Ping of death"; GID:1; sid:10
 
 #sid-map
 1 || 10000013 || 001 || misc-activity || 0 || Posible Ping of death
+
+
+#Para configurar Snort en modo inline (bloqueo de paquetes)
+#agregar lo siguiente a snort.conf
+config daq:afpacket
+config daq_node:inline
+config policity_mode:inline
