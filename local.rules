@@ -39,3 +39,10 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg: "Incoming SSH Connection"; GID
 #1 ejecutar: hping3 -S -p 80 --flood --rand-source 192.168.x.x
 #2 ejecutar: tshark
 alert tcp $HOME_NET any -> $HOME_NET 80 (flags: S; msg:"Possible TCP DoS"; flow: stateless; threshold: type both, track by_dst, count 70, seconds 10; sid:10000001;rev:1;)
+
+
+#ALerta
+alert icmp any any -> $HOME_NET any (msg: "Posible Ping of death"; GID:1; sid:10000013; rev:001; dsize: >1510; classtype:misc-activity;)
+
+#sid-map
+1 || 10000013 || 001 || misc-activity || 0 || Posible Ping of death
