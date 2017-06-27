@@ -53,3 +53,6 @@ alert icmp any any -> $HOME_NET any (msg: "Posible Ping of death"; GID:1; sid:10
 config daq:afpacket
 config daq_node:inline
 config policity_mode:inline
+
+#comando para activar modo
+snort -Q -c /etc/snort/snort.conf -i eth0:eth1 -A console
