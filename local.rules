@@ -60,6 +60,15 @@ snort -Q -c /etc/snort/snort.conf -i eth0:eth1 -A console
 #Alerta de bloqueo 
 reject tcp any any <> any $HTTP_PORTS (msg:"Dropped Malicious Traffic"; content: facebook.com"; nocase; SID:991999;)
 #Bloqueo de conexion SSH
-reject tcp any any -> any 22 (msg:"I block everything to port 22"; sid:100001)
-#Bloqueo de conexion FTP
-reject tcp any any -> any 21 (msg:"I block everything to port 21"; sid:100002)
+reject tcp any any -> any 22 (msg:"block everything to port 22"; sid:100001)
+#Bloqueo de conexion FTP-bloque los puertos: 21,2100,3535
+reject tcp any any -> any $FTP_PORTS (msg:"block everything to port 21"; sid:100002)
+#Bloqueo de puertos HTTP-[80,81,311,383,591,593,901,1220,1414,1741,1830,2301,2381,2809,3037,3128,3702,4343,4848,5250,6988,7000,7001,7144,7145,7510,7777,7779,8000,8008,8014,8028,8080,8085,8088,8090,8118,8123,8180,8181,8243,8280,8300,8800,8888,8899,9000,9060,9080,9090,9091,9443,9999,11371,34443,34444,41080,50002,55555]
+reject tcp any any -> any $FTP_PORTS (msg:"block everything to port HTTP PORTS"; sid:100003)
+#Bloqueo de puertos Oracle-1024 propenso a ataques
+reject tcp any any -> any ORACLE_PORTS(msg:"block everything to port 1024"; sid:100004)
+#Bloqueo POP-puerto 110 
+reject tcp any any -> any 110 (msg:"block everything to port 110"; sid:100004)
+#Bloqueo SMTP-puerto 25 
+reject tcp any any -> any 25 (msg:"block everything to port 25"; sid:100004)
+
