@@ -93,3 +93,14 @@ reject udp any any -> any 6887 (msg:"block coonection Torrent to port 6887"; sid
 reject udp any any -> any 6888 (msg:"block coonection Torrent to port 6888"; sid:100023)
 reject udp any any -> any 6889 (msg:"block coonection to port 6889"; sid:100024)
 
+#Alerta de torrent 
+#utorren-TCP [6881] 
+alert tcp any any -> any 6881 (msg:"Torrent-TCP Traffic in the port 6881 "; sid:10000014)
+
+#Bloqueo Puertos para utorren-UDP [6881] 
+alert udp any any -> any 6881 (msg:"Torrent-UDP Traffic in the port 6881 "; sid:10000015)
+
+#sid-msg.map
+1 || 10000014 || 001 || misc-activity || 0 || Torrent-TCP Traffic in the port 6881
+1 || 10000015 || 001 || misc-activity || 0 || Torrent-UDP Traffic in the port 6881
+
