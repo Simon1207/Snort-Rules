@@ -68,7 +68,28 @@ reject tcp any any -> any $FTP_PORTS (msg:"block everything to port HTTP PORTS";
 #Bloqueo de puertos Oracle-1024 propenso a ataques
 reject tcp any any -> any ORACLE_PORTS(msg:"block everything to port 1024"; sid:100004)
 #Bloqueo POP-puerto 110 
-reject tcp any any -> any 110 (msg:"block everything to port 110"; sid:100004)
+reject tcp any any -> any 110 (msg:"block everything to port 110"; sid:100005)
 #Bloqueo SMTP-puerto 25 
-reject tcp any any -> any 25 (msg:"block everything to port 25"; sid:100004)
+reject tcp any any -> any 25 (msg:"block everything to port 25"; sid:100006)
+
+#Bloqueo Puertos para utorren-TCP [6881-6889] 
+reject tcp any any -> any 6881 (msg:"block coonection Torrent to port 6881"; sid:100007)
+reject tcp any any -> any 6882 (msg:"block coonection Torrent to port 6882"; sid:100008)
+reject tcp any any -> any 6883 (msg:"block coonection Torrent to port 6883"; sid:100009)
+reject tcp any any -> any 6884 (msg:"block coonection Torrent to port 6884"; sid:100010)
+reject tcp any any -> any 6885 (msg:"block coonection Torrent to port 6885"; sid:100011)
+reject tcp any any -> any 6886 (msg:"block coonection Torrent to port 6886"; sid:100012)
+reject tcp any any -> any 6887 (msg:"block coonection Torrent to port 6887"; sid:100013)
+reject tcp any any -> any 6888 (msg:"block coonection Torrent to port 6888"; sid:100014)
+reject tcp any any -> any 6889 (msg:"block coonection Torrent to port 6889"; sid:100015)
+#Bloqueo Puertos para utorren-UDP [6881-6889] 
+reject udp any any -> any 6881 (msg:"block coonection Torrent to port 6881"; sid:100016)
+reject udp any any -> any 6882 (msg:"block coonection Torrent to port 6882"; sid:100017)
+reject udp any any -> any 6883 (msg:"block coonection Torrent to port 6883"; sid:100018)
+reject udp any any -> any 6884 (msg:"block coonection Torrent to port 6884"; sid:100019)
+reject udp any any -> any 6885 (msg:"block coonection Torrent to port 6885"; sid:100020)
+reject udp any any -> any 6886 (msg:"block coonection Torrent to port 6886"; sid:100021)
+reject udp any any -> any 6887 (msg:"block coonection Torrent to port 6887"; sid:100022)
+reject udp any any -> any 6888 (msg:"block coonection Torrent to port 6888"; sid:100023)
+reject udp any any -> any 6889 (msg:"block coonection to port 6889"; sid:100024)
 
